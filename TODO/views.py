@@ -4,6 +4,9 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
+
+from .forms import TodoForm
+
 # Create your views here.
 
 def signupuser(request):
@@ -79,3 +82,30 @@ def loginuser(request):
 
 def home(request):
     return render(request, 'TODO/home.html')
+
+@login_required(login_url='loginuser')
+def createtodo(request):
+    if request.method == 'GET':
+        return render(request,
+                     'TODO/createtodo.html',
+                     {'form': TodoForm()}
+                     )
+    else:
+        try:
+            form = TodoForm(request.POST)
+            newtodo = form.save(commit=False)
+            newtodo.user = request.user
+            newtodo.save()
+            return redirect('currenttodos')
+        except ValueError as identifier:
+            return render(request,
+                     'TODO/createtodo.html',
+                     {'form': TodoForm(),
+                      'error_msg': identifier
+                     }
+                     )
+
+
+        
+
+
