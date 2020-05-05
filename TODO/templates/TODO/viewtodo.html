@@ -1,0 +1,17 @@
+{% extends 'TODO/base.html' %}
+
+{% block content %}
+
+{% if error_msg %}
+    {{ error_msg }}
+{% endif %}
+
+<p></p>
+{{ todo.title_short }}
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Update!</button>
+</form>
+
+{% endblock %}

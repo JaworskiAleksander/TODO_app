@@ -13,3 +13,9 @@ class Todo(models.Model):
     def __str__(self):
         return self.title
 
+    def memo_short(self):
+        return self.memo[:15]
+
+    def title_short(self):
+        return self.title[:15]
+
