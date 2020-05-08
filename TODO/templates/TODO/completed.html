@@ -2,23 +2,20 @@
 
 {% block content %}
 
-{% if error_msg %}
-<h2> {{ error_msg }}</h2>
-{% endif %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-10">
+        <h4>Completed Todo's</h4>
+    </div>
+</div>
 
-<p>List of completed notes</p>
+<div class="row justify-content-center mt-5">
+    <div class="col-md-10">
+        <div class="list-group">
+            {% for item in todos %}
+            <a href="{% url 'viewtodo' item.id %}" class="list-group-item list-group-item-action{% if item.important %} list-group-item-danger{% endif %}"><b>{{ item.title }}</b> - Completed {{ item.datecompleted|date:'M j Y H:i' }}</a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
 
-<ul>
-    {% for item in todos %}
-    <li>
-        <a href="{% url 'viewtodo' todo_pk=item.pk %}">
-            {% if item.important %}<b>{% endif %}
-                {{ item.title_short }}
-            {% if item.important %}</b>{% endif %}
-            @ {{ item.datecompleted|date:'M j Y H:i' }}
-        </a>
-    </li>
-    {% endfor %}
-
-</ul>
 {% endblock %}
