@@ -2,14 +2,38 @@
 
 {% block content %}
 
+<div class="row justify-content-center mt-5">
+    <div class="col-md-5">
+        <h4>Log in</h4>
+    </div>
+</div>
 
-<h4>Log in</h4>
-{% if error_msg %}
-<h2> {{ error_msg }}</h2>
-{% endif %}
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Log in</button>
-</form>
+<div class="row justify-content-center mt-5">
+    <div class="col-md-5">
+        {% if error_msg %}
+        <div class="alert alert-danger" role="alert">
+            {{ error_msg }}
+        </div>
+        {% endif %}
+
+        <form action="" method="post" class="text-center">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" name="username" class="form-control" id="username">
+            </div>
+            <div class="form-group">
+                <label for="password1">Password</label>
+                <input type="password" name="password" class="form-control" id="password">
+            </div>            
+            <button type="submit" class="btn btn-outline-secondary">Login</button>
+        </form>
+        <hr>
+        <div class="text-center">
+            Need an account?
+            <p></p>
+            <a href="{% url 'signupuser' %}" class="btn btn-outline-secondary">Sign Up here!</a>
+        </div>
+    </div>
+</div>
 {% endblock %}
