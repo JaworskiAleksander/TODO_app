@@ -45,7 +45,7 @@ def currenttodos(request):
     todos = Todo.objects.filter(user=request.user, datecompleted__isnull=True)
     return render(request, 'TODO/currenttodos.html', {'todos': todos})
 
-@login_required()
+@login_required(login_url='loginuser')
 def logoutuser(request):
     if request.method == 'POST':
         logout(request)
@@ -132,6 +132,7 @@ def viewtodo(request, todo_pk):
                           {'todo': todo, 'form':form, 'error_msg': 'Bad info!'}
                           )
 
+@login_required(login_url='loginuser')
 def completetodo(request, todo_pk):
     todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
     if request.method == 'POST':
@@ -139,8 +140,15 @@ def completetodo(request, todo_pk):
         todo.save()
         return redirect('currenttodos')
 
+@login_required(login_url='loginuser')
 def deletetodo(request, todo_pk):
     todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
     if request.method == 'POST':
         todo.delete()
         return redirect('currenttodos')
+
+@login_required(login_url='loginuser')
+def completed(request):
+    todos = Todo.objects.filter(user=request.user, datecompleted__isnull=False).order_by('-datecompleted')
+    return render(request, 'TODO/completed.html', {'todos': todos})
+

@@ -1,0 +1,24 @@
+{% extends 'TODO/base.html' %}
+
+{% block content %}
+
+{% if error_msg %}
+<h2> {{ error_msg }}</h2>
+{% endif %}
+
+<p>List of completed notes</p>
+
+<ul>
+    {% for item in todos %}
+    <li>
+        <a href="{% url 'viewtodo' todo_pk=item.pk %}">
+            {% if item.important %}<b>{% endif %}
+                {{ item.title_short }}
+            {% if item.important %}</b>{% endif %}
+            @ {{ item.datecompleted|date:'M j Y H:i' }}
+        </a>
+    </li>
+    {% endfor %}
+
+</ul>
+{% endblock %}
