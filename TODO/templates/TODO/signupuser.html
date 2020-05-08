@@ -2,14 +2,43 @@
 
 {% block content %}
 
+<div class="row justify-content-center mt-5">
+    <div class="col-md-5">
+        <h4>Sign Up!</h4>
+    </div>
+</div>
 
-<h4>Sign Up!</h4>
-{% if error_msg %}
-<h2> {{ error_msg }}</h2>
-{% endif %}
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Sign Up!</button>
-</form>
+<div class="row justify-content-center mt-5">
+    <div class="col-md-5">
+        {% if error_msg %}
+        <div class="alert alert-danger" role="alert">
+            {{ error_msg }}
+        </div>
+        {% endif %}
+
+        <form action="" method="post" class="text-center">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" name="username" class="form-control" id="username">
+            </div>
+            <div class="form-group">
+                <label for="password1">Password</label>
+                <input type="password" name="password1" class="form-control" id="password1">
+            </div>
+            <div class="form-group">
+                <label for="password2">Confirm Password</label>
+                <input type="password" name="password2" class="form-control" id="password2">
+            </div>
+            <button type="submit" class="btn btn-outline-secondary">Sign Up!</button>
+        </form>
+        <hr>
+        <div class="text-center">
+            Already have an account?
+            <p></p>
+            <a href="{% url 'loginuser' %}" class="btn btn-outline-secondary">Log in here!</a>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
