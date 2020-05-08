@@ -2,4 +2,8 @@
 
 {% block content %}
 Welcome
+{% if error_msg %}
+<h2> {{ error_msg }}</h2>
+{% endif %}
+
 {% endblock %}

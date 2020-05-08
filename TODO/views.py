@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
+from django.http import Http404
+from django.utils import timezone
 
 from .forms import TodoForm
 from .models import Todo
@@ -109,7 +111,13 @@ def createtodo(request):
 
 @login_required(login_url='loginuser')
 def viewtodo(request, todo_pk):
-    todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
+    try:
+        todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
+    except Http404:
+        return redirect('home')            
+    # add handling 404 exception
+    # redirect to homepage and
+    # display error_msg: you are not authorized to view this note
     if request.method == 'GET':
         form = TodoForm(instance=todo)
         return render(request, 'TODO/viewtodo.html', {'todo': todo, 'form':form})
@@ -119,8 +127,20 @@ def viewtodo(request, todo_pk):
             form.save()
             return redirect('currenttodos')
         except ValueError as identifier:
-            return render(request, 'TODO/viewtodo.html', {'todo': todo, 'form':form, 'error_msg': 'Bad info!'})
+            return render(request,
+                          'TODO/viewtodo.html',
+                          {'todo': todo, 'form':form, 'error_msg': 'Bad info!'}
+                          )
 
-        
+def completetodo(request, todo_pk):
+    todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
+    if request.method == 'POST':
+        todo.datecompleted = timezone.now()
+        todo.save()
+        return redirect('currenttodos')
 
-    
+def deletetodo(request, todo_pk):
+    todo = get_object_or_404(Todo, pk=todo_pk, user=request.user)
+    if request.method == 'POST':
+        todo.delete()
+        return redirect('currenttodos')

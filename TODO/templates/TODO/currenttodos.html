@@ -2,16 +2,19 @@
 
 {% block content %}
 
+{% if error_msg %}
+<h2> {{ error_msg }}</h2>
+{% endif %}
+
 <ul>
     {% for item in todos %}
-    <a href="{% url 'viewtodo' todo_pk=item.pk %}">
-        <li>
+    <li>
+        <a href="{% url 'viewtodo' todo_pk=item.pk %}">
             {% if item.important %}<b>{% endif %}
                 {{ item.title_short }}
             {% if item.important %}</b>{% endif %}
-            {% if item.memo %} - {{ item.memo_short }}{% endif %}
-        </li>
-    </a>
+        </a>
+    </li>
     {% endfor %}
 
 </ul>
