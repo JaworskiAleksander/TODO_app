@@ -2,20 +2,34 @@
 
 {% block content %}
 
-{% if error_msg %}
-<h2> {{ error_msg }}</h2>
-{% endif %}
+<div class="row justify-content-center mt-5">
+    {% if error_msg %}
+        <div class="alert alert-danger" role="alert">
+            {{ error_msg }}
+        </div>
+    {% endif %}
+</div>
+<h1>Current TODOs:</h1>
+<div class="row justify-content-center mt-5">
+    <div class="col-md-10">
+        {% if todos %}
+            <div class="list-group">
+                {% for item in todos %}
+                    <a href="{% url 'viewtodo' item.pk %}" class="list-group-item list-group-item-action{% if item.important %} list-group-item-danger{% endif %}"><b>{{ item.title }}</b>{% if item.memo %} - {{ item.memo|truncatechars:30 }}{% endif %}</a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center">
+                <h4>Congratulations! Your TODO list is EMPTY!</h4>
+                <br>
+                <a href="{% url 'createtodo' %}" class="btn btn-outline-secondary">Create new TODO</a>
+            </div>
+        {% endif %}
+    </div>
 
-<ul>
-    {% for item in todos %}
-    <li>
-        <a href="{% url 'viewtodo' todo_pk=item.pk %}">
-            {% if item.important %}<b>{% endif %}
-                {{ item.title_short }}
-            {% if item.important %}</b>{% endif %}
-        </a>
-    </li>
-    {% endfor %}
 
-</ul>
+</div>
+
+
+
 {% endblock %}

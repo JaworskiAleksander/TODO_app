@@ -40,7 +40,7 @@ def signupuser(request):
                           {'form': UserCreationForm(),
                            'error_msg':'Passwords did not match.'})
 
-@login_required(login_url='loginuser')
+#@login_required(login_url='loginuser')
 def currenttodos(request):
     todos = Todo.objects.filter(user=request.user, datecompleted__isnull=True)
     return render(request, 'TODO/currenttodos.html', {'todos': todos})
@@ -105,7 +105,7 @@ def createtodo(request):
             return render(request,
                      'TODO/createtodo.html',
                      {'form': TodoForm(),
-                      'error_msg': identifier
+                      'error_msg': "ERROR"
                      }
                      )
 
