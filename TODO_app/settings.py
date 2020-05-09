@@ -121,3 +121,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 LOGIN_URL = 'login/'
+
+try:
+    from local_settings import *
+except ImportError:
+    print('ImportError occured')
+    pass

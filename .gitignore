@@ -198,3 +198,4 @@ pip-selfcheck.json
 # My stuff
 .local_settings
 .local_settings.py
+local_settings.py
