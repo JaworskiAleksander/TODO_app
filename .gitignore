@@ -181,3 +181,4 @@ dmypy.json
 
 # My stuff
 .local_settings
+.local_settings.py
