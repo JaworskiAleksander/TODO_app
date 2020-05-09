@@ -121,7 +121,7 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 for item in os.listdir(STATIC_ROOT):
     print(item)
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 
 LOGIN_URL = 'login/'
 
