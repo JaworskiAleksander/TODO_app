@@ -179,6 +179,22 @@ dmypy.json
 
 # End of https://www.gitignore.io/api/django,python,visualstudiocode
 
+### VirtualEnv ###
+# Virtualenv
+# http://iamzed.com/2009/05/07/a-primer-on-virtualenv/
+pyvenv.cfg
+.env
+.venv
+myvenv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+pip-selfcheck.json
+
+
+
 # My stuff
 .local_settings
 .local_settings.py
